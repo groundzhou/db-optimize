@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://xingtian:3306/cqrcb
+    username: ground
+    password: ujku549763gld
+server:
+  servlet:
+    context-path: /api
+
+
