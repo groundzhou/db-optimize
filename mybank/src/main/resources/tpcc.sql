@@ -43,7 +43,7 @@ CREATE TABLE Customer
 );
 
 -- 创建 Order 表
-CREATE TABLE Order
+CREATE TABLE OOrder
 (
     OrderID      INT PRIMARY KEY,
     CustomerID   INT,
@@ -66,7 +66,7 @@ CREATE TABLE OrderLine
     Quantity            INT,
     Amount              DECIMAL(10, 2),
     PRIMARY KEY (OrderID, LineNumber),
-    FOREIGN KEY (OrderID) REFERENCES Order (OrderID)
+    FOREIGN KEY (OrderID) REFERENCES OOrder (OrderID)
 );
 
 -- 创建 Stock 表

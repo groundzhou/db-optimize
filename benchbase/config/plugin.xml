@@ -1,20 +1,4 @@
 <?xml version="1.0"?>
 <plugins>
-    <plugin name="tpcc">com.cqrcb.dboptimize.benchbase.benchmark.TPCCBenchmark</plugin>
-<!--    <plugin name="tpch">com.cqrcb.dboptimize.benchbase.benchmarks.tpch.TPCHBenchmark</plugin>-->
-<!--    <plugin name="tatp">com.cqrcb.dboptimize.benchbase.benchmarks.tatp.TATPBenchmark</plugin>-->
-<!--    <plugin name="wikipedia">com.cqrcb.dboptimize.benchbase.benchmarks.wikipedia.WikipediaBenchmark</plugin>-->
-<!--    <plugin name="resourcestresser">com.cqrcb.dboptimize.benchbase.benchmarks.resourcestresser.ResourceStresserBenchmark</plugin>-->
-<!--    <plugin name="twitter">com.cqrcb.dboptimize.benchbase.benchmarks.twitter.TwitterBenchmark</plugin>-->
-<!--    <plugin name="epinions">com.cqrcb.dboptimize.benchbase.benchmarks.epinions.EpinionsBenchmark</plugin>-->
-<!--    <plugin name="ycsb">com.cqrcb.dboptimize.benchbase.benchmarks.ycsb.YCSBBenchmark</plugin>-->
-<!--    <plugin name="seats">com.cqrcb.dboptimize.benchbase.benchmarks.seats.SEATSBenchmark</plugin>-->
-<!--    <plugin name="auctionmark">com.cqrcb.dboptimize.benchbase.benchmarks.auctionmark.AuctionMarkBenchmark</plugin>-->
-<!--    <plugin name="chbenchmark">com.cqrcb.dboptimize.benchbase.benchmarks.chbenchmark.CHBenCHmark</plugin>-->
-<!--    <plugin name="voter">com.cqrcb.dboptimize.benchbase.benchmarks.voter.VoterBenchmark</plugin>-->
-<!--    <plugin name="sibench">com.cqrcb.dboptimize.benchbase.benchmarks.sibench.SIBenchmark</plugin>-->
-<!--    <plugin name="noop">com.cqrcb.dboptimize.benchbase.benchmarks.noop.NoOpBenchmark</plugin>-->
-<!--    <plugin name="smallbank">com.cqrcb.dboptimize.benchbase.benchmarks.smallbank.SmallBankBenchmark</plugin>-->
-<!--    <plugin name="hyadapt">com.cqrcb.dboptimize.benchbase.benchmarks.hyadapt.HYADAPTBenchmark</plugin>-->
-<!--    <plugin name="otmetrics">com.cqrcb.dboptimize.benchbase.benchmarks.otmetrics.OTMetricsBenchmark</plugin>-->
+    <plugin name="tpcc">com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCBenchmark</plugin>
 </plugins>
