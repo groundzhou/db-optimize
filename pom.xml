@@ -16,7 +16,7 @@
     <description>db-optimize</description>
     <modules>
         <module>benchbase</module>
-        <module>smallbank</module>
+        <module>mybank</module>
     </modules>
     <properties>
         <java.version>17</java.version>
