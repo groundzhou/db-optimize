@@ -10,9 +10,6 @@ DROP TABLE IF EXISTS district;
 DROP TABLE IF EXISTS stock;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS warehouse;
-DROP TABLE IF EXISTS account;
-DROP TABLE IF EXISTS transaction_record;
-DROP TABLE IF EXISTS log;
 
 CREATE TABLE warehouse
 (
@@ -161,44 +158,52 @@ CREATE TABLE order_line
     PRIMARY KEY (ol_w_id, ol_d_id, ol_o_id, ol_number)
 );
 
+CREATE INDEX idx_customer_name ON customer (c_w_id, c_d_id, c_last, c_first);
 
-CREATE TABLE IF NOT EXISTS account
+
+-- 银行账户系统
+DROP TABLE IF EXISTS transaction_record;
+DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS log;
+
+CREATE TABLE account
 (
-    a_id         INT            NOT NULL,
-    a_c_id       INT            NOT NULL,
-    a_number     VARCHAR(20)    NOT NULL,
-    a_balance    DECIMAL(12, 2) NOT NULL,
-    a_created_at DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    a_updated_at DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    a_w_id        INT            NOT NULL,
+    a_d_id        INT            NOT NULL,
+    a_c_id        INT            NOT NULL,
+    a_id          INT            NOT NULL AUTO_INCREMENT,
+    a_type        INT            NOT NULL DEFAULT 1,
+    a_number      VARCHAR(20)    NOT NULL,
+    a_balance     DECIMAL(12, 2) NOT NULL,
+    a_balance_lim DECIMAL(12, 2) NOT NULL,
+    a_day_lim     DECIMAL(10, 2) NOT NULL,
+    a_created_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    a_updated_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (a_id)
+    -- FOREIGN KEY (a_w_id, a_d_id, a_c_id) REFERENCES customer (c_w_id, c_d_id, c_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS transaction_record
+CREATE TABLE transaction_record
 (
-    tr_id          INT            NOT NULL,
+    tr_id          INT            NOT NULL AUTO_INCREMENT,
     tr_a_id        INT            NOT NULL,
-    tr_o_id        INT            NULL,
     tr_type        VARCHAR(50)    NOT NULL,
     tr_amount      DECIMAL(10, 2) NOT NULL,
     tr_date        DATETIME       NOT NULL,
     tr_description LONGTEXT       NOT NULL,
-    tr_created_at  DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    tr_updated_at  DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (tr_id),
-    FOREIGN KEY (tr_a_id) REFERENCES account (a_id)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
+    tr_created_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tr_updated_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (tr_id)
 );
 
-CREATE TABLE IF NOT EXISTS log
+CREATE TABLE log
 (
-    l_id        INT          NOT NULL,
-    l_action    VARCHAR(255) NULL,
+    l_id        INT          NOT NULL AUTO_INCREMENT,
+    l_type      INT          NOT NULL DEFAULT 0,
     l_timestamp TIMESTAMP    NULL,
+    l_action    VARCHAR(255) NULL,
     PRIMARY KEY (l_id)
 );
-
-CREATE INDEX idx_customer_name ON customer (c_w_id, c_d_id, c_last, c_first);
 
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;

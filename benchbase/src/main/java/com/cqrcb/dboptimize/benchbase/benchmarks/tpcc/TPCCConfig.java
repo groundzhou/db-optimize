@@ -16,7 +16,7 @@
  */
 
 
-package com.cqrcb.dboptimize.benchbase.benchmark;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc;
 
 import java.text.SimpleDateFormat;
 

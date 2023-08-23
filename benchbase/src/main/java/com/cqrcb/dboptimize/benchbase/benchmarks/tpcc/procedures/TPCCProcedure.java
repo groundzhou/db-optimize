@@ -15,22 +15,17 @@
  *
  */
 
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.procedures;
 
-package com.cqrcb.dboptimize.benchbase.benchmark.pojo;
+import com.cqrcb.dboptimize.benchbase.api.Procedure;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCWorker;
 
-import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Random;
 
-public class NewOrder implements Serializable {
+public abstract class TPCCProcedure extends Procedure {
 
-    public int no_w_id;
-    public int no_d_id;
-    public int no_o_id;
-
-    @Override
-    public String toString() {
-        return ("\n***************** NewOrder ********************"
-                + "\n*      no_w_id = " + no_w_id + "\n*      no_d_id = "
-                + no_d_id + "\n*      no_o_id = " + no_o_id + "\n**********************************************");
-    }
+    public abstract void run(Connection conn, Random gen, int terminalWarehouseID, int numWarehouses, int terminalDistrictLowerID, int terminalDistrictUpperID, TPCCWorker w) throws SQLException;
 
 }

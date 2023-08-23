@@ -15,17 +15,23 @@
  *
  */
 
-package com.cqrcb.dboptimize.benchbase.benchmark.procedures;
 
-import com.cqrcb.dboptimize.benchbase.api.Procedure;
-import com.cqrcb.dboptimize.benchbase.benchmark.TPCCWorker;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.pojo;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Random;
+public class Item {
 
-public abstract class TPCCProcedure extends Procedure {
+    public int i_id; // PRIMARY KEY
+    public int i_im_id;
+    public double i_price;
+    public String i_name;
+    public String i_data;
 
-    public abstract void run(Connection conn, Random gen, int terminalWarehouseID, int numWarehouses, int terminalDistrictLowerID, int terminalDistrictUpperID, TPCCWorker w) throws SQLException;
+    @Override
+    public String toString() {
+        return ("\n***************** Item ********************"
+                + "\n*    i_id = " + i_id + "\n*  i_name = " + i_name
+                + "\n* i_price = " + i_price + "\n*  i_data = " + i_data
+                + "\n* i_im_id = " + i_im_id + "\n**********************************************");
+    }
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package com.cqrcb.dboptimize.benchbase.benchmark;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc;
 
 public abstract class TPCCConstants {
     public static final String TABLENAME_DISTRICT = "district";
@@ -27,4 +27,6 @@ public abstract class TPCCConstants {
     public static final String TABLENAME_OPENORDER = "oorder";
     public static final String TABLENAME_ORDERLINE = "order_line";
     public static final String TABLENAME_NEWORDER = "new_order";
+    public static final String TABLENAME_ACCOUNT = "account";
+    public static final String TABLENAME_TRANSACTIONRECORD = "transaction_record";
 }

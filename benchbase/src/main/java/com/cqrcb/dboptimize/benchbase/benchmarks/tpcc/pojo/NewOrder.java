@@ -16,22 +16,21 @@
  */
 
 
-package com.cqrcb.dboptimize.benchbase.benchmark.pojo;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.pojo;
 
-public class Item {
+import java.io.Serializable;
 
-    public int i_id; // PRIMARY KEY
-    public int i_im_id;
-    public double i_price;
-    public String i_name;
-    public String i_data;
+public class NewOrder implements Serializable {
+
+    public int no_w_id;
+    public int no_d_id;
+    public int no_o_id;
 
     @Override
     public String toString() {
-        return ("\n***************** Item ********************"
-                + "\n*    i_id = " + i_id + "\n*  i_name = " + i_name
-                + "\n* i_price = " + i_price + "\n*  i_data = " + i_data
-                + "\n* i_im_id = " + i_im_id + "\n**********************************************");
+        return ("\n***************** NewOrder ********************"
+                + "\n*      no_w_id = " + no_w_id + "\n*      no_d_id = "
+                + no_d_id + "\n*      no_o_id = " + no_o_id + "\n**********************************************");
     }
 
 }

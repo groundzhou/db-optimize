@@ -16,12 +16,12 @@
  */
 
 
-package com.cqrcb.dboptimize.benchbase.benchmark;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc;
 
 import com.cqrcb.dboptimize.benchbase.api.Procedure.UserAbortException;
 import com.cqrcb.dboptimize.benchbase.api.TransactionType;
 import com.cqrcb.dboptimize.benchbase.api.Worker;
-import com.cqrcb.dboptimize.benchbase.benchmark.procedures.TPCCProcedure;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.procedures.TPCCProcedure;
 import com.cqrcb.dboptimize.benchbase.types.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

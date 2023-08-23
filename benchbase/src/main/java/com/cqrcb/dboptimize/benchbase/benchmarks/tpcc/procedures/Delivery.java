@@ -15,13 +15,13 @@
  *
  */
 
-package com.cqrcb.dboptimize.benchbase.benchmark.procedures;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.procedures;
 
 import com.cqrcb.dboptimize.benchbase.api.SQLStmt;
-import com.cqrcb.dboptimize.benchbase.benchmark.TPCCConfig;
-import com.cqrcb.dboptimize.benchbase.benchmark.TPCCConstants;
-import com.cqrcb.dboptimize.benchbase.benchmark.TPCCUtil;
-import com.cqrcb.dboptimize.benchbase.benchmark.TPCCWorker;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCConfig;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCConstants;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCUtil;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

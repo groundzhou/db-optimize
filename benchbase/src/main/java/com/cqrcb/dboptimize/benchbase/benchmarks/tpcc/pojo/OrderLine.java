@@ -16,7 +16,7 @@
  */
 
 
-package com.cqrcb.dboptimize.benchbase.benchmark.pojo;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.pojo;
 
 import java.sql.Timestamp;
 

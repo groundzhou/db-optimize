@@ -16,16 +16,17 @@
  */
 
 
-package com.cqrcb.dboptimize.benchbase.benchmark;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc;
 
-import com.cqrcb.dboptimize.benchbase.benchmark.pojo.Customer;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.pojo.Customer;
 import com.cqrcb.dboptimize.benchbase.util.RandomGenerator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Random;
 
-import static com.cqrcb.dboptimize.benchbase.benchmark.TPCCConfig.*;
+import static com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCConfig.*;
 
 public class TPCCUtil {
 
@@ -128,6 +129,12 @@ public class TPCCUtil {
         return (((randomNumber(0, A, r) | randomNumber(min, max, r)) + C) % (max
                 - min + 1))
                 + min;
+    }
+
+    public static Timestamp randomTime(long startTime, long endTime, Random r) {
+        long range = endTime - startTime + 1;
+        long randomTime = startTime + (long) (r.nextDouble() * range);
+        return new Timestamp(randomTime);
     }
 
 }

@@ -16,13 +16,13 @@
  */
 
 
-package com.cqrcb.dboptimize.benchbase.benchmark;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc;
 
 import com.cqrcb.dboptimize.benchbase.WorkloadConfiguration;
 import com.cqrcb.dboptimize.benchbase.api.BenchmarkModule;
 import com.cqrcb.dboptimize.benchbase.api.Loader;
 import com.cqrcb.dboptimize.benchbase.api.Worker;
-import com.cqrcb.dboptimize.benchbase.benchmark.procedures.NewOrder;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.procedures.NewOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
