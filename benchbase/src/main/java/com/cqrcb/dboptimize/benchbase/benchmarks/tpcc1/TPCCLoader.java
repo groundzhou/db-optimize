@@ -16,11 +16,11 @@
  */
 
 
-package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc;
+package com.cqrcb.dboptimize.benchbase.benchmarks.tpcc1;
 
 import com.cqrcb.dboptimize.benchbase.api.Loader;
 import com.cqrcb.dboptimize.benchbase.api.LoaderThread;
-import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.pojo.*;
+import com.cqrcb.dboptimize.benchbase.benchmarks.tpcc1.pojo.*;
 import com.cqrcb.dboptimize.benchbase.catalog.Table;
 import com.cqrcb.dboptimize.benchbase.util.SQLUtil;
 
@@ -120,6 +120,18 @@ public class TPCCLoader extends Loader<TPCCBenchmark> {
                     }
                     // ORDER LINES
                     loadOrderLines(conn, w_id, TPCCConfig.configDistPerWhse, TPCCConfig.configCustPerDist);
+
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Starting to load ACCOUNTS {}", w_id);
+                    }
+                    // ACCOUNTS
+                    loadAccounts(conn, w_id, TPCCConfig.configDistPerWhse, TPCCConfig.configCustPerDist);
+
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Starting to load TRANSACTION RECORDS {}", w_id);
+                    }
+                    // TRANSACTION RECORDS
+                    loadTransactionRecords(conn, w_id, TPCCConfig.configDistPerWhse, TPCCConfig.configCustPerDist);
 
                 }
 
@@ -687,6 +699,112 @@ public class TPCCLoader extends Loader<TPCCBenchmark> {
             LOG.error(se.getMessage(), se);
         }
 
+    }
+
+    protected void loadAccounts(Connection conn, int w_id, int districtsPerWarehouse, int customersPerDistrict) {
+        int k = 0;
+        try (PreparedStatement accountPrepStmt = getInsertStatement(conn, TPCCConstants.TABLENAME_ACCOUNT)) {
+            for (int d = 1; d <= districtsPerWarehouse; d++) {
+                for (int c = 1; c <= customersPerDistrict; c++) {
+                    Timestamp sysdate = new Timestamp(System.currentTimeMillis());
+
+                    Account account = new Account();
+                    account.a_w_id = w_id;
+                    account.a_d_id = d;
+                    account.a_c_id = c;
+                    account.a_id = (w_id - 1) * districtsPerWarehouse * customersPerDistrict +
+                            (d - 1) * customersPerDistrict + c;
+
+                    account.a_type = TPCCUtil.randomNumber(1, 3, benchmark.rng());
+                    account.a_number = TPCCUtil.randomNStr(16);
+                    account.a_balance = 20000;
+                    account.a_balance_lim = 10000000;
+                    account.a_day_lim = 500000;
+                    account.a_created_at = sysdate;
+                    account.a_updated_at = sysdate;
+
+                    int idx = 1;
+                    accountPrepStmt.setLong(idx++, account.a_w_id);
+                    accountPrepStmt.setLong(idx++, account.a_d_id);
+                    accountPrepStmt.setLong(idx++, account.a_c_id);
+                    accountPrepStmt.setLong(idx++, account.a_id);
+                    accountPrepStmt.setInt(idx++, account.a_type);
+                    accountPrepStmt.setString(idx++, account.a_number);
+                    accountPrepStmt.setDouble(idx++, account.a_balance);
+                    accountPrepStmt.setDouble(idx++, account.a_balance_lim);
+                    accountPrepStmt.setDouble(idx++, account.a_day_lim);
+                    accountPrepStmt.setTimestamp(idx++, account.a_created_at);
+                    accountPrepStmt.setTimestamp(idx, account.a_updated_at);
+                    accountPrepStmt.addBatch();
+                    k++;
+
+                    if (k != 0 && (k % workConf.getBatchSize()) == 0) {
+                        accountPrepStmt.executeBatch();
+                        accountPrepStmt.clearBatch();
+                    }
+                }
+            }
+
+            accountPrepStmt.executeBatch();
+            accountPrepStmt.clearBatch();
+
+        } catch (SQLException se) {
+            LOG.error(se.getMessage());
+        }
+    }
+
+    protected void loadTransactionRecords(Connection conn, int w_id, int districtsPerWarehouse, int customersPerDistrict) {
+        int k = 0;
+        int startAccount = (w_id - 1) * districtsPerWarehouse * customersPerDistrict + 1;
+        int endAccount = w_id * districtsPerWarehouse * customersPerDistrict;
+        long startTime = Timestamp.valueOf("2022-01-01 00:00:00").getTime();
+        long endTime = new Timestamp(System.currentTimeMillis()).getTime();
+
+        String[] transactionTypes = {"Deposit", "Withdraw", "Transfer-In", "Transfer-Out", "Payment", "Refund"};
+
+        String sql = "INSERT INTO transaction_record " +
+                "(tr_a_id, tr_type, tr_amount, tr_date, tr_description, tr_created_at, tr_updated_at) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement trPrepStmt = conn.prepareStatement(sql)) {
+
+            for (int a = startAccount; a <= endAccount; a++) {
+
+                int count = TPCCUtil.randomNumber(5, 15, benchmark.rng());
+
+                for (int i = 0; i < count; i++) {
+                    TransactionRecord record = new TransactionRecord();
+                    record.tr_a_id = a;
+                    record.tr_type = transactionTypes[TPCCUtil.randomNumber(0, 5, benchmark.rng())];
+                    record.tr_amount = TPCCUtil.randomNumber(1, 99999, benchmark.rng());
+                    record.tr_date = TPCCUtil.randomTime(startTime, endTime, benchmark.rng());
+                    record.tr_description = TPCCUtil.randomStr(50);
+                    record.tr_created_at = record.tr_date;
+                    record.tr_updated_at = record.tr_date;
+
+                    int idx = 1;
+                    trPrepStmt.setLong(idx++, record.tr_a_id);
+                    trPrepStmt.setString(idx++, record.tr_type);
+                    trPrepStmt.setDouble(idx++, record.tr_amount);
+                    trPrepStmt.setTimestamp(idx++, record.tr_date);
+                    trPrepStmt.setString(idx++, record.tr_description);
+                    trPrepStmt.setTimestamp(idx++, record.tr_created_at);
+                    trPrepStmt.setTimestamp(idx, record.tr_updated_at);
+                    trPrepStmt.addBatch();
+                    k++;
+
+                    if (k != 0 && (k % workConf.getBatchSize()) == 0) {
+                        trPrepStmt.executeBatch();
+                        trPrepStmt.clearBatch();
+                    }
+                }
+            }
+
+            trPrepStmt.executeBatch();
+            trPrepStmt.clearBatch();
+
+        } catch (SQLException se) {
+            LOG.error(se.getMessage());
+        }
     }
 
 }

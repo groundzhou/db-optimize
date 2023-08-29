@@ -57,5 +57,8 @@ build/
 ### VS Code ###
 .vscode/
 
-results/
-config/mysql/*
+/benchbase/results
+/benchbase/config/mysql/*.xml
+!/benchbase/config/mysql/sample_*_config.xml
+
+

@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <plugins>
     <plugin name="tpcc">com.cqrcb.dboptimize.benchbase.benchmarks.tpcc.TPCCBenchmark</plugin>
+    <plugin name="tpcc1">com.cqrcb.dboptimize.benchbase.benchmarks.tpcc1.TPCCBenchmark</plugin>
 </plugins>
